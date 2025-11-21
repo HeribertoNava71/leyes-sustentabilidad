@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Jurídico de la Sustentabilidad | México</title>
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2E7D32; /* Verde Bosque */
+            --secondary: #00796B; /* Verde Azulado */
+            --accent: #F9A825; /* Amarillo Solar */
+            --dark: #1a1a1a;
+            --light: #f4f4f4;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            animation: fadeInUp 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+            animation: fadeInUp 1s ease 0.8s forwards;
+            opacity: 0;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        /* Sections General */
+        section {
+            padding: 5rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .section-title .line {
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 0 auto;
+        }
+
+        /* Constitución Section */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-bottom: 4px solid var(--secondary);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* Leyes Section */
+        .laws-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        .law-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+
+        .law-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .check-icon {
+            color: var(--primary);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        /* NOMs Section - Tabs */
+        .noms-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .nom-card {
+            background: var(--dark);
+            color: var(--white);
+            width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nom-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+        }
+
+        .nom-card h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        /* Timeline Internacional */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .container-time {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .container-time::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -12px;
+            background-color: var(--white);
+            border: 4px solid var(--accent);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .content-time {
+            padding: 20px;
+            background-color: var(--white);
+            position: relative;
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Animations Classes */
+        .hidden {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* Simple hide for demo, ideal is hamburger */
+            .timeline::after { left: 31px; }
+            .container-time { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .container-time::after { left: 21px; }
+            .right { left: 0%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo"><i class="fas fa-leaf"></i> Sustentabilidad MX</div>
+        <div class="nav-links">
+            <a href="#constitucion">Constitución</a>
+            <a href="#leyes">Leyes</a>
+            <a href="#noms">NOMs</a>
+            <a href="#politicas">Políticas</a>
+            <a href="#internacional">Internacional</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Desarrollo Sustentable</h1>
+            <p>"Satisfacer las necesidades de las generaciones presentes sin comprometer la capacidad de las generaciones futuras para satisfacer sus propias necesidades."</p>
+            <a href="#constitucion" class="btn">Explorar Marco Jurídico</a>
+        </div>
+    </section>
+
+    <!-- Constitución -->
+    <section id="constitucion">
+        <div class="section-title hidden">
+            <h2>Fundamento Constitucional</h2>
+            <div class="line"></div>
+            <p>La base suprema del ordenamiento jurídico mexicano.</p>
+        </div>
+        <div class="grid-container">
+            <div class="card hidden">
+                <div class="card-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3>Artículo 4</h3>
+                <p>Derecho humano a un medio ambiente sano para el desarrollo y bienestar.</p>
+            </div>
+            <div class="card hidden">
+                <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
+                <h3>Artículo 25</h3>
+                <p>Rectoría del Estado para garantizar que el desarrollo nacional sea integral y sustentable.</p>
+            </div>
+            <div class="card hidden">
+                <div class="card-icon"><i class="fas fa-globe-americas"></i></div>
+                <h3>Artículo 27</h3>
+                <p>Propiedad de la Nación sobre tierras y aguas. Regulación del aprovechamiento de elementos naturales.</p>
+            </div>
+            <div class="card hidden">
+                <div class="card-icon"><i class="fas fa-gavel"></i></div>
+                <h3>Artículo 73</h3>
+                <p>Facultades del Congreso para legislar en materia de equilibrio ecológico y protección al ambiente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leyes Secundarias -->
+    <section id="leyes" style="background-color: #e8f5e9;">
+        <div class="section-title hidden">
+            <h2>Legislación Secundaria</h2>
+            <div class="line"></div>
+            <p>Leyes Generales y Federales clave.</p>
+        </div>
+        <div class="laws-container hidden">
+            <div class="law-item">
+                <i class="fas fa-check-circle check-icon"></i>
+                <div>
+                    <h3>LGEEPA</h3>
+                    <p>Ley General del Equilibrio Ecológico y la Protección al Ambiente. Es la ley marco que regula la política ambiental.</p>
+                </div>
+            </div>
+            <div class="law-item">
+                <i class="fas fa-tree check-icon"></i>
+                <div>
+                    <h3>Ley General de Desarrollo Forestal Sustentable</h3>
+                    <p>Regula el manejo integral y sustentable de los territorios forestales y combate a la deforestación.</p>
+                </div>
+            </div>
+            <div class="law-item">
+                <i class="fas fa-temperature-high check-icon"></i>
+                <div>
+                    <h3>Ley General de Cambio Climático</h3>
+                    <p>Establece las bases para la mitigación y adaptación al cambio climático y reducción de emisiones.</p>
+                </div>
+            </div>
+            <div class="law-item">
+                <i class="fas fa-trash-restore check-icon"></i>
+                <div>
+                    <h3>Ley General para la Prevención y Gestión Integral de los Residuos</h3>
+                    <p>Fomenta la economía circular, el manejo de residuos y la reducción de la contaminación.</p>
+                </div>
+            </div>
+            <div class="law-item">
+                <i class="fas fa-water check-icon"></i>
+                <div>
+                    <h3>Ley de Aguas Nacionales</h3>
+                    <p>Gestión sustentable del agua, saneamiento y uso eficiente del recurso hídrico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOMs -->
+    <section id="noms">
+        <div class="section-title hidden">
+            <h2>Normas Oficiales Mexicanas (NOMs)</h2>
+            <div class="line"></div>
+            <p>Estándares técnicos obligatorios.</p>
+        </div>
+        <div class="noms-wrapper">
+            <div class="nom-card hidden">
+                <i class="fas fa-wind card-icon"></i>
+                <h4>Aire y Atmósfera</h4>
+                <p><strong>NOM-081-SEMARNAT</strong>: Ruido y emisiones.</p>
+                <p><strong>NOM-041-SEMARNAT</strong>: Emisiones de vehículos.</p>
+            </div>
+            <div class="nom-card hidden">
+                <i class="fas fa-tint card-icon"></i>
+                <h4>Agua</h4>
+                <p><strong>NOM-001-SEMARNAT</strong>: Descargas en aguas y bienes nacionales.</p>
+                <p><strong>NOM-127-SSA1</strong>: Calidad del agua potable.</p>
+            </div>
+            <div class="nom-card hidden">
+                <i class="fas fa-paw card-icon"></i>
+                <h4>Biodiversidad</h4>
+                <p><strong>NOM-059-SEMARNAT</strong>: Protección de especies nativas (flora y fauna) en riesgo.</p>
+            </div>
+            <div class="nom-card hidden">
+                <i class="fas fa-industry card-icon"></i>
+                <h4>Residuos y Suelo</h4>
+                <p><strong>NOM-052-SEMARNAT</strong>: Identificación de residuos peligrosos.</p>
+                <p><strong>NOM-138-SEMARNAT</strong>: Suelos contaminados.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Políticas Públicas -->
+    <section id="politicas" style="background-color: var(--primary); color: var(--white);">
+        <div class="section-title hidden">
+            <h2 style="color: var(--white);">Políticas e Iniciativas</h2>
+            <div class="line" style="background: var(--white);"></div>
+        </div>
+        <div class="grid-container">
+            <div class="card hidden" style="color: var(--dark);">
+                <h3>Plan Nacional de Desarrollo</h3>
+                <p>Eje de desarrollo sostenible. Busca el bienestar social sin dejar a nadie atrás, integrando la dimensión ambiental en la toma de decisiones.</p>
+            </div>
+            <div class="card hidden" style="color: var(--dark);">
+                <h3>Agenda 2030 (Estrategia Nacional)</h3>
+                <p>Hoja de ruta para cumplir con los 17 Objetivos de Desarrollo Sostenible (ODS), alineando presupuestos y leyes.</p>
+            </div>
+            <div class="card hidden" style="color: var(--dark);">
+                <h3>Reformas Recientes</h3>
+                <p>Iniciativas sobre recuperación de alimentos, protección del litio, economía circular y prohibición de plásticos de un solo uso.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internacional -->
+    <section id="internacional">
+        <div class="section-title hidden">
+            <h2>Marco Internacional</h2>
+            <div class="line"></div>
+            <p>Acuerdos globales ratificados por México.</p>
+        </div>
+        <div class="timeline">
+            <div class="container-time left hidden">
+                <div class="content-time">
+                    <h3>1972 - Estocolmo</h3>
+                    <p>Declaración sobre el Medio Ambiente Humano. Primer gran reconocimiento global.</p>
+                </div>
+            </div>
+            <div class="container-time right hidden">
+                <div class="content-time">
+                    <h3>1992 - Cumbre de Río</h3>
+                    <p>Declaración de Río sobre el Medio Ambiente y el Desarrollo. Nace la Agenda 21.</p>
+                </div>
+            </div>
+            <div class="container-time left hidden">
+                <div class="content-time">
+                    <h3>2002 - Johannesburgo</h3>
+                    <p>Cumbre Mundial sobre Desarrollo Sostenible. Enfoque en pobreza y consumo.</p>
+                </div>
+            </div>
+            <div class="container-time right hidden">
+                <div class="content-time">
+                    <h3>2012 - Río+20</h3>
+                    <p>"El futuro que queremos". Énfasis en la economía verde.</p>
+                </div>
+            </div>
+            <div class="container-time left hidden">
+                <div class="content-time">
+                    <h3>2015 - Acuerdo de París</h3>
+                    <p>Compromiso vinculante para limitar el calentamiento global (Cambio Climático).</p>
+                </div>
+            </div>
+            <div class="container-time right hidden">
+                <div class="content-time">
+                    <h3>2015/2030 - Agenda 2030</h3>
+                    <p>17 Objetivos de Desarrollo Sostenible (ODS) para transformar el mundo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Evidencia de Divulgación Informativa | Desarrollo Sustentable</p>
+        <p>Desarrollado para fines académicos &copy; 2023</p>
+    </footer>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
