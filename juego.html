@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Legislador: El Desafío</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #81C784;
+            --accent: #FFD54F;
+            --danger: #e53935;
+            --dark: #1b5e20;
+            --light: #f1f8e9;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--light);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232e7d32' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .game-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header del Juego */
+        .game-header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            font-weight: bold;
+        }
+
+        .stat-item i {
+            margin-right: 5px;
+            color: var(--accent);
+        }
+
+        /* Pantallas */
+        .screen {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Pantalla de Inicio */
+        .start-screen h1 {
+            color: var(--dark);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .start-icon {
+            font-size: 5rem;
+            color: var(--primary);
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: var(--dark);
+            transform: scale(1.05);
+        }
+
+        /* Pantalla de Pregunta */
+        .question-container {
+            width: 100%;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .category-badge {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .option-btn {
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #e8f5e9;
+        }
+
+        .option-btn.correct {
+            background: #c8e6c9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .option-btn.wrong {
+            background: #ffcdd2;
+            border-color: #e53935;
+            color: #c62828;
+        }
+
+        /* Feedback Modal/Overlay */
+        .feedback-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .feedback-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .feedback-correct { color: var(--primary); }
+        .feedback-wrong { color: var(--danger); }
+
+        .explanation {
+            margin: 15px 0 30px 0;
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Pantalla Final */
+        .result-score {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .result-message {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="game-header">
+            <div>Eco-Legislador</div>
+            <div class="stats">
+                <div class="stat-item"><i class="fas fa-heart"></i> <span id="lives">3</span></div>
+                <div class="stat-item"><i class="fas fa-star"></i> <span id="score">0</span></div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Inicio -->
+        <div id="start-screen" class="screen start-screen">
+            <i class="fas fa-globe-americas start-icon"></i>
+            <h1>Eco-Legislador</h1>
+            <p style="margin-bottom: 20px;">Demuestra cuánto sabes sobre las leyes, normas y políticas de sustentabilidad en México.</p>
+            <p style="font-size: 0.9rem; color: #666;">Basado en la Constitución, LGEEPA y NOMs.</p>
+            <button class="btn" onclick="startGame()">¡Comenzar Reto!</button>
+        </div>
+
+        <!-- Pantalla de Juego -->
+        <div id="game-screen" class="screen hidden">
+            <div class="question-container">
+                <span id="category" class="category-badge">Categoría</span>
+                <div id="question" class="question-text">Pregunta aquí...</div>
+                <div id="options" class="options-grid">
+                    <!-- Las opciones se generan con JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Overlay (Correcto/Incorrecto) -->
+        <div id="feedback-screen" class="feedback-overlay hidden">
+            <i id="feedback-icon" class="fas fa-check-circle feedback-icon"></i>
+            <h2 id="feedback-title">¡Correcto!</h2>
+            <p id="feedback-text" class="explanation">Explicación...</p>
+            <button class="btn" onclick="nextQuestion()">Siguiente</button>
+        </div>
+
+        <!-- Pantalla Final -->
+        <div id="end-screen" class="screen hidden">
+            <h2 id="end-title">¡Juego Terminado!</h2>
+            <div class="result-score" id="final-score">0</div>
+            <p id="end-message" class="result-message">Mensaje final</p>
+            <button class="btn" onclick="resetGame()">Jugar de Nuevo</button>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progress" class="progress-fill"></div>
+        </div>
+    </div>
+
+    <script>
+        // Banco de Preguntas basado en el documento PDF
+        const questions = [
+            {
+                category: "Constitución",
+                question: "¿Qué artículo constitucional establece el derecho de toda persona a un medio ambiente sano?",
+                options: ["Artículo 27", "Artículo 4", "Artículo 73", "Artículo 123"],
+                correct: 1,
+                explanation: "El Artículo 4 Constitucional (Párrafo 5) garantiza el derecho humano a un medio ambiente sano para el desarrollo y bienestar."
+            },
+            {
+                category: "Definiciones",
+                question: "Según el Informe Brundtland, ¿qué es el desarrollo sustentable?",
+                options: [
+                    "Cuidar árboles y animales únicamente.",
+                    "Crecimiento económico acelerado sin restricciones.",
+                    "Satisfacer necesidades presentes sin comprometer a futuras generaciones.",
+                    "Prohibir toda actividad industrial."
+                ],
+                correct: 2,
+                explanation: "Esta es la definición clásica de 1987: Equilibrio entre economía, sociedad y ambiente pensando en el futuro."
+            },
+            {
+                category: "NOMs - Agua",
+                question: "¿Cuál es la Norma Oficial Mexicana que regula los límites permisibles en descargas de aguas residuales?",
+                options: ["NOM-001-SEMARNAT-1996", "NOM-059-SEMARNAT-2010", "NOM-087-ECOL-SSA1-2002", "NOM-052-SEMARNAT-2005"],
+                correct: 0,
+                explanation: "La NOM-001-SEMARNAT-1996 establece los límites máximos permisibles de contaminantes en las descargas de aguas residuales."
+            },
+            {
+                category: "Leyes",
+                question: "¿Cuál es la ley marco en México para la política ambiental y el equilibrio ecológico?",
+                options: ["Ley de Aguas Nacionales", "Ley Minera", "LGEEPA", "Ley Agraria"],
+                correct: 2,
+                explanation: "La LGEEPA (Ley General del Equilibrio Ecológico y la Protección al Ambiente) es el principal instrumento jurídico regulatorio."
+            },
+            {
+                category: "NOMs - Biodiversidad",
+                question: "Si encuentras una especie en peligro de extinción, ¿qué NOM la clasifica?",
+                options: ["NOM-001-SEMARNAT", "NOM-127-SSA1", "NOM-059-SEMARNAT-2010", "NOM-081-SEMARNAT"],
+                correct: 2,
+                explanation: "La NOM-059-SEMARNAT-2010 determina las especies nativas de flora y fauna silvestres en categorías de riesgo."
+            },
+            {
+                category: "Agenda Internacional",
+                question: "¿Cuál es la agenda global de la ONU que establece 17 Objetivos de Desarrollo Sostenible?",
+                options: ["Tratado de Libre Comercio", "Agenda 2030", "Protocolo de Kioto", "Convenio de Basilea"],
+                correct: 1,
+                explanation: "La Agenda 2030, adoptada en 2015, establece 17 objetivos (ODS) para erradicar la pobreza y proteger el planeta."
+            },
+            {
+                category: "Residuos",
+                question: "¿Qué NOM se utiliza para identificar y clasificar los residuos peligrosos?",
+                options: ["NOM-052-SEMARNAT-2005", "NOM-041-SEMARNAT-2015", "NOM-003-CONAGUA-1996", "NOM-028-ENER-2010"],
+                correct: 0,
+                explanation: "La NOM-052-SEMARNAT-2005 establece las características, el procedimiento de identificación y los listados de residuos peligrosos."
+            },
+            {
+                category: "Constitución",
+                question: "El Artículo 27 Constitucional establece:",
+                options: [
+                    "La educación laica y gratuita.",
+                    "El derecho a la salud.",
+                    "La propiedad de la Nación sobre tierras, aguas y recursos naturales.",
+                    "La libertad de expresión."
+                ],
+                correct: 2,
+                explanation: "El Artículo 27 es fundamental para la sustentabilidad, pues regula la propiedad originaria y el aprovechamiento de los recursos naturales."
+            }
+        ];
+
+        // Estado del Juego
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let lives = 3;
+        let shuffledQuestions = [];
+
+        // Elementos del DOM
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const endScreen = document.getElementById('end-screen');
+        const feedbackScreen = document.getElementById('feedback-screen');
+        
+        const questionEl = document.getElementById('question');
+        const categoryEl = document.getElementById('category');
+        const optionsEl = document.getElementById('options');
+        
+        const livesEl = document.getElementById('lives');
+        const scoreEl = document.getElementById('score');
+        const progressBar = document.getElementById('progress');
+
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        const finalScoreEl = document.getElementById('final-score');
+        const endMessageEl = document.getElementById('end-message');
+        const endTitleEl = document.getElementById('end-title');
+
+        // Funciones del Juego
+        function startGame() {
+            lives = 3;
+            score = 0;
+            currentQuestionIndex = 0;
+            livesEl.innerText = lives;
+            scoreEl.innerText = score;
+            
+            // Mezclar preguntas
+            shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+            
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = shuffledQuestions[currentQuestionIndex];
+            
+            // Actualizar UI
+            categoryEl.innerText = currentQ.category;
+            questionEl.innerText = currentQ.question;
+            optionsEl.innerHTML = '';
+            
+            // Actualizar Barra de Progreso
+            const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Generar botones de opciones
+            currentQ.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.classList.add('option-btn');
+                btn.innerHTML = `<span>${option}</span>`; // innerHTML para permitir negritas si se requiere
+                btn.onclick = () => checkAnswer(index);
+                optionsEl.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const currentQ = shuffledQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === currentQ.correct;
+
+            // Mostrar Feedback
+            feedbackScreen.classList.remove('hidden');
+            
+            if (isCorrect) {
+                score += 100;
+                scoreEl.innerText = score;
+                feedbackIcon.className = "fas fa-check-circle feedback-icon feedback-correct";
+                feedbackTitle.innerText = "¡Correcto!";
+                feedbackTitle.style.color = "var(--primary)";
+            } else {
+                lives--;
+                livesEl.innerText = lives;
+                feedbackIcon.className = "fas fa-times-circle feedback-icon feedback-wrong";
+                feedbackTitle.innerText = "Incorrecto";
+                feedbackTitle.style.color = "var(--danger)";
+            }
+
+            feedbackText.innerText = currentQ.explanation;
+
+            // Verificar si perdió
+            if (lives <= 0) {
+                // Cambiar botón de siguiente en feedback para ir al final
+                const nextBtn = feedbackScreen.querySelector('button');
+                nextBtn.onclick = endGame;
+            } else {
+                // Restaurar comportamiento normal
+                const nextBtn = feedbackScreen.querySelector('button');
+                nextBtn.onclick = nextQuestion;
+            }
+        }
+
+        function nextQuestion() {
+            feedbackScreen.classList.add('hidden');
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                loadQuestion();
+            } else {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            feedbackScreen.classList.add('hidden');
+            gameScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            
+            finalScoreEl.innerText = score;
+            progressBar.style.width = '100%';
+
+            if (lives <= 0) {
+                endTitleEl.innerText = "¡Se acabaron las vidas!";
+                endMessageEl.innerText = "Necesitas repasar un poco más las normas. ¡Inténtalo de nuevo!";
+            } else if (score === questions.length * 100) {
+                endTitleEl.innerText = "¡Perfecto!";
+                endMessageEl.innerText = "Eres un verdadero experto en legislación ambiental.";
+            } else {
+                endTitleEl.innerText = "¡Bien hecho!";
+                endMessageEl.innerText = "Tienes buenos conocimientos sobre sustentabilidad.";
+            }
+        }
+
+        function resetGame() {
+            startGame();
+            // Restaurar onclick del botón de feedback por si se cambió al perder
+            const nextBtn = feedbackScreen.querySelector('button');
+            nextBtn.onclick = nextQuestion;
+        }
+
+    </script>
+</body>
+</html>
